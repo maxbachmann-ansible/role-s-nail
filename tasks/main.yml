@@ -1,0 +1,22 @@
+---
+- name: Install apticron
+  become: true
+  apt:
+    name: s-nail
+    state: present
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: add bash script
+  become: true
+  copy:
+   src: files/shell-login.sh
+   dest: /opt/shell-login.sh
+   mode: 0755
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: send mails
+  become: true
+  lineinfile:
+    path: /etc/profile
+    line: '/opt/shell-login.sh | mailx -s {{ login_message }} {{ snail_email }}'
+
