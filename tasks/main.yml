@@ -19,4 +19,5 @@
   lineinfile:
     path: /etc/profile
     line: '/opt/shell-login.sh | mailx -s {{ login_message }} {{ snail_email }}'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
